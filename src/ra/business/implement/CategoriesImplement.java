@@ -11,7 +11,7 @@ import static ra.business.implement.ProductImplement.listProduct;
 
 public class CategoriesImplement implements ICategories {
     public static List<Categories> listCategories = new ArrayList<>();
-
+// trả về index thông qua id
     @Override
     public int findIndexById() {
         System.out.println("Nhập Id danh mục:");
@@ -23,7 +23,7 @@ public class CategoriesImplement implements ICategories {
         }
         return -1;
     }
-
+// thêm mới danh mục
     @Override
     public void createData() {
         System.out.println("Nhập số danh mục muốn thêm mới");
@@ -35,12 +35,12 @@ public class CategoriesImplement implements ICategories {
             listCategories.add(newCategories);
         }
     }
-
+// hiển thi danh sách danh mục
     @Override
     public void displayAll() {
         listCategories.forEach(Categories::displayData);
     }
-
+// cập nhật danh mục
     @Override
     public void updateData() {
         displayAll();
@@ -53,7 +53,7 @@ public class CategoriesImplement implements ICategories {
             System.err.println("Danh mục không tồn ");
         }
     }
-
+// xóa danh mục
     @Override
     public void deleteData() {
         displayAll();
@@ -61,7 +61,7 @@ public class CategoriesImplement implements ICategories {
         if (deleteIndex != -1) {
             boolean isContain = false;
             for (int i = 0; i < listProduct.size(); i++) {
-                if (listCategories.get(deleteIndex).getCatalogId() == listProduct.get(i).getCatalogId()) {
+                if (listCategories.get(deleteIndex).getCatalogId() == listProduct.get(i).getCatalogId()) {// chỉ cho phép xóa nếu danh mục không tồn tại sản phẩm nào
                     System.err.println("Danh mục vẫn còn sản phẩm, không thể xóa");
                     isContain = true;
                     break;
@@ -74,7 +74,7 @@ public class CategoriesImplement implements ICategories {
             System.err.println("Danh mục không tồn ");
         }
     }
-
+// thay đổi trạng thái danh mục
     @Override
     public void changeStatus() {
         displayAll();

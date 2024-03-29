@@ -88,16 +88,18 @@ public class Product {
         this.productStatus = productStatus;
     }
 
+    // phương thức nhập dữ liệu
     public void inputData() {
         this.productId = inputProductId();
         this.productName = inputProductName();
-        this.price=inputProductPrice();
-        this.description=inputProductDescription();
-        this.created=inputProductCreate();
-        this.catalogId=inputCatalogId();
-        this.productStatus=inputProductStatus();
+        this.price = inputProductPrice();
+        this.description = inputProductDescription();
+        this.created = inputProductCreate();
+        this.catalogId = inputCatalogId();
+        this.productStatus = inputProductStatus();
     }
 
+    // lấy Id
     public String inputProductId() {
         String regex = "^[CSA]{1}[0-9]{3}$";
         do {
@@ -123,19 +125,20 @@ public class Product {
         while (true);
     }
 
+    // lấy tên
     public String inputProductName() {
         do {
             System.out.println("Nhập tên cho sản phẩm: ");
             String inputName = InputMethods.getString();
-            if (inputName.trim().length()>=10 && inputName.trim().length()<=50){
+            if (inputName.trim().length() >= 10 && inputName.trim().length() <= 50) {
                 boolean isExist = false;
                 for (int i = 0; i < listProduct.size(); i++) {
-                    if (listProduct.get(i).getProductName().equals(inputName)){
+                    if (listProduct.get(i).getProductName().equals(inputName)) {
                         isExist = true;
                         break;
                     }
                 }
-                if (isExist){
+                if (isExist) {
                     System.err.println("Tên sản phẩm đã tồn tại, mời nhập lại.");
                 } else {
                     return inputName;
@@ -147,67 +150,77 @@ public class Product {
         }
         while (true);
     }
-    public float inputProductPrice(){
+
+    // lấy giá
+    public float inputProductPrice() {
         do {
             System.out.println("Nhập giá cho sản phẩm: ");
             float inputPrice = InputMethods.getFloat();
-            if (inputPrice>0){
+            if (inputPrice > 0) {
                 return inputPrice;
             } else {
                 System.err.println("Giá sản phẩm phải lớn hơn 0, mời nhập lại.");
             }
         } while (true);
     }
-    public String inputProductDescription(){
+
+    // lấy mô tả
+    public String inputProductDescription() {
         System.out.println("Nhập mô tả:");
         String inputDescription = InputMethods.getString();
         return inputDescription;
     }
-    public LocalDate inputProductCreate(){
+
+    // lấy ngày nhập
+    public LocalDate inputProductCreate() {
         String regex = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(19|20)\\d{2}$";
         do {
             System.out.println("Nhập ngày nhập sản phẩm: ");
             String inputLocalDate = InputMethods.getString();
-            if (inputLocalDate.matches(regex)){
-                return LocalDate.parse(inputLocalDate,DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            if (inputLocalDate.matches(regex)) {
+                return LocalDate.parse(inputLocalDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             } else {
                 System.err.println("Ngày tháng không đúng định dạng (dd/MM/yyyy)");
             }
 
-        }while (true);
+        } while (true);
 
     }
-    public int inputCatalogId(){
+
+    // lấy mã danh mục
+    public int inputCatalogId() {
         do {
-            if (!listCategories.isEmpty()){
+            if (!listCategories.isEmpty()) {
                 System.out.println("Nhập mã danh mục cho sản phẩm: ");
                 for (int i = 0; i < listCategories.size(); i++) {
-                    System.out.printf("%d. Mã danh mục: %-5d || Tên danh mục: %-10s\n",(i+1),listCategories.get(i).getCatalogId(),listCategories.get(i).getCatalogName());
+                    System.out.printf("%d. Mã danh mục: %-5d || Tên danh mục: %-10s\n", (i + 1), listCategories.get(i).getCatalogId(), listCategories.get(i).getCatalogName());
                     System.out.println("======================================================");
                 }
                 int inputCatalogId = InputMethods.getInteger();
                 boolean isChose = false;
                 for (int i = 0; i < listCategories.size(); i++) {
-                    if (listCategories.get(i).getCatalogId()==inputCatalogId){
+                    if (listCategories.get(i).getCatalogId() == inputCatalogId) {
                         isChose = true;
                         return inputCatalogId;
                     }
                 }
-                if (!isChose){
+                if (!isChose) {
                     System.err.println("Mã danh mục nhận vào không đúng, mời nhập lại.");
                 }
-            }
-         else{
+            } else {
                 System.err.println("Danh mục trống, hãy thêm mới danh mục");
-             return 0;}
+                return 0;
+            }
         }
         while (true);
     }
-    public Status inputProductStatus(){
+
+    // láy trạng thái
+    public Status inputProductStatus() {
         do {
             System.out.println("Nhập trạng thái cho sản phẩm(Active/Block/Inactive:");
             String inputStatus = InputMethods.getString();
-            if (inputStatus.toUpperCase().equals("ACTIVE")){
+            if (inputStatus.toUpperCase().equals("ACTIVE")) {
                 return Status.ACTIVE;
             } else if (inputStatus.toUpperCase().equals("INACTIVE")) {
                 return Status.INACTIVE;
@@ -219,11 +232,13 @@ public class Product {
         }
         while (true);
     }
-    public void displayData(){
-        System.out.printf("Mã sản phẩm: %-5s || Tên sản phẩm %-13s || Giá: %-10f\n",this.productId,this.productName,this.price);
-        System.out.printf("Mô tả: %-25s\n",this.description);
+
+    // hiển thị dữ liệu
+    public void displayData() {
+        System.out.printf("Mã sản phẩm: %-5s || Tên sản phẩm %-13s || Giá: %-10f\n", this.productId, this.productName, this.price);
+        System.out.printf("Mô tả: %-25s\n", this.description);
         System.out.printf("Ngày nhập: %-10s || Mã danh mục: %-3d || Trạng thái: %-8s\n",
-                this.created.toString(),this.catalogId,this.productStatus.getName());
+                this.created.toString(), this.catalogId, this.productStatus.getName());
         System.out.println("=================================================\n");
     }
 }
